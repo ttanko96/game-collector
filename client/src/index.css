@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+        .sidebar-icon {
+            @apply relative flex items-center justify-center h-20 w-20 mt-2 mb-2 mx-auto shadow-lg bg-gray-800 text-red-700 hover:bg-gray-600 hover:text-orange-600 rounded-md hover:rounded-bl-3xl transition-all duration-300 ease-linear;
+        }
+
+        .sidebar-tooltip {
+            @apply absolute w-auto p-2 m-2 min-w-max left-16 rounded-md shadow-md text-white bg-gray-900 text-xs font-bold transition-all duration-100 scale-0 origin-left;
+        }
+
+        .carousel-item {
+            @apply w-64 h-[350px] flex justify-center items-center bg-[#7f1c88] text-white font-bold rounded-[8px] shrink-0 transition-transform duration-300 ease-in-out;
+        }
+
+        .carousel-track {
+            @apply flex gap-2 transition-transform duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)];
+        }
+    
+        .carousel-container {
+            @apply overflow-hidden max-w-[1048px];
+        }
+}

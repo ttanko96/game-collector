@@ -1,0 +1,39 @@
+# Függőségek
+/node_modules
+/.pnp
+.pnp.js
+
+# Környezeti változók
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Build eredmények
+/build
+/dist
+
+# IDE/Editor specifikus
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Teszt eredmények
+/coverage
+
+# Logok
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Csomagkezelő specifikus
+package-lock.json
+yarn.lock
+
+# Gyorsítótár
+.cache
