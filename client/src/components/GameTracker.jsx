@@ -1,28 +1,17 @@
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import { useEffect, useRef, useState } from 'react';
 
-const GameTracker = () => {
-    const [myGames, setMyGames] = useState([]);
-    const items = Array.from({ length: 20 }, (_, i) => i + 1); 
-    //const items = Array.from(myGames);
+const GameTracker = ({ items, onResetGames }) => {
     const [startIndex, setStartIndex] = useState(0);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const carouselRef = useRef(null);
     const prevBtnRef = useRef(null); 
     const nextBtnRef = useRef(null);
 
-    useEffect(() => {
-        const savedGames = localStorage.getItem('myGames');
-        if (savedGames) {
-            setMyGames(JSON.parse(savedGames));
+    const handleReset = () => {
+        if(window.confirm('Are you sue?')) {
+            onResetGames([]);
         }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('myGames', JSON.stringify(myGames));
-    }, [myGames]);
+    }
     
     useEffect(() => {
         const updatePosition = () => {
@@ -62,7 +51,13 @@ const GameTracker = () => {
     };
 
     return (
-        <div className='flex items-center justify-center w-screen h-screen bg-gray-800'>
+        <div className='flex items-center justify-center w-screen h-screen bg-matte-black'>
+            <button
+          onClick={handleReset}
+          className="mb-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 hidden"
+        >
+          Reset Game List
+        </button>
             <div className="flex items-center">
                 <button 
                     ref={prevBtnRef} 
@@ -77,9 +72,13 @@ const GameTracker = () => {
                         ref={carouselRef} 
                         className="carousel-track flex"
                     >
-                        {items.map((item) => (
-                            <div key={item} className="carousel-item">
-                                {item}
+                        {items.map((game) => (
+                            <div key={game} className="carousel-item">
+                                <img
+                                    className="carousel-item"
+                                    src={game.image}
+                                    alt={game.name}
+                                />
                             </div>
                         ))}
                     </div>
