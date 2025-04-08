@@ -1,16 +1,16 @@
-import { GiBandit, GiTrophiesShelf, GiStarMedal } from "react-icons/gi";
+import { GiBandit, GiTrophiesShelf, GiStarMedal, GiBookshelf  } from "react-icons/gi";
 
 const SideBar = ({ onNavigate }) => {    
     return (
         <div className="fixed top-0 left-0 h-screen w-32 m-0 flex flex-col bg-custom-gray text-white shadow-lg drop-shadow-md
         ">
             <SideBarIcon
-                icon={<GiBandit size="58" />}
+                icon={<GiBookshelf size="58" />}
                 text={"Játékkönyvtár"}
                 onClick={() => onNavigate('search')}
             />
             <SideBarIcon 
-                icon={<GiTrophiesShelf size="58" />} 
+                icon={<GiBandit size="58" />} 
                 text={"Saját lista"}
                 onClick={() => onNavigate('tracker')}
             />

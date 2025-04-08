@@ -51,7 +51,7 @@ const GameTracker = ({ items, onResetGames }) => {
     };
 
     return (
-        <div className='flex items-center justify-center w-screen h-screen bg-matte-black'>
+        <div className='flex py-20 items-start justify-center w-screen h-screen bg-matte-black'>
             <button
           onClick={handleReset}
           className="mb-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 hidden"
