@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const GameTracker = ({ items, onResetGames }) => {
     const [startIndex, setStartIndex] = useState(0);
+    const [sortAlphabetically, setSortAlphabetically] = useState(false);
     const carouselRef = useRef(null);
     const prevBtnRef = useRef(null); 
     const nextBtnRef = useRef(null);
@@ -12,6 +13,10 @@ const GameTracker = ({ items, onResetGames }) => {
             onResetGames([]);
         }
     }
+
+    const displayedItems = sortAlphabetically 
+    ? [...items].sort((a, b) => a.name.localeCompare(b.name))
+    : items;
     
     useEffect(() => {
         const updatePosition = () => {
@@ -20,7 +25,7 @@ const GameTracker = ({ items, onResetGames }) => {
             const slideWidth = carouselRef.current.children[0]?.offsetWidth;
             if (!slideWidth) return;
             
-            const itemGap = 8;
+            const itemGap = 24;
             const offset = -startIndex * (slideWidth + itemGap);
             carouselRef.current.style.transform = `translateX(${offset}px)`;
         };
@@ -58,6 +63,15 @@ const GameTracker = ({ items, onResetGames }) => {
         >
           Reset Game List
         </button>
+        <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        checked={sortAlphabetically}
+                        onChange={() => setSortAlphabetically(!sortAlphabetically)}
+                        className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
             <div className="flex items-center">
                 <button 
                     ref={prevBtnRef} 
@@ -72,7 +86,7 @@ const GameTracker = ({ items, onResetGames }) => {
                         ref={carouselRef} 
                         className="carousel-track flex"
                     >
-                        {items.map((game) => (
+                        {displayedItems.map((game) => (
                             <div key={game} className="carousel-item">
                                 <img
                                     className="carousel-item"
