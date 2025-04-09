@@ -10,7 +10,8 @@ export default {
         'custom-onyx-black' : '#353935',
         'custom-dark-purple' : '#301934',
         'licorice' : '#1B1212',
-        'matte-black' : '#28282B'
+        'matte-black' : '#28282B',
+        'crimson' : '#DC143C'
       },
     },
   },
