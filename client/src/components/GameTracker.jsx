@@ -2,6 +2,10 @@ import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const GameTracker = ({ items, onResetGames }) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -10,6 +14,98 @@ const GameTracker = ({ items, onResetGames }) => {
   const prevBtnRef = useRef(null);
   const nextBtnRef = useRef(null);
   const [selectedGame, setSelectedGame] = useState(null);
+
+  const getStatistics = () => {
+    const totalGames = items.length;
+    const completedGames = items.filter((game) => game.completed).length;
+    const platinumGames = items.filter((game) => game.platinum).length;
+    const platformCounts = {};
+    items.forEach((game) => {
+      if (game.selectedPlatforms) {
+        game.selectedPlatforms.forEach((platform) => {
+          platformCounts[platform] = (platformCounts[platform] || 0) + 1;
+        });
+      }
+    });
+
+    return {
+      totalGames,
+      completedGames,
+      platinumGames,
+      platformCounts,
+    };
+  };
+
+  const statistics = getStatistics();
+
+  const totalGamesData = {
+    labels: ["Total Games"],
+    datasets: [
+      {
+        label: "Games",
+        data: [statistics.totalGames],
+        backgroundColor: ["rgba(255, 99, 132, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const completionData = {
+    labels: ["Completed", "In Progress"],
+    datasets: [
+      {
+        label: "Summary",
+        data: [statistics.completedGames],
+        backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
+        borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const platinumData = {
+    labels: ["Platinum trophy earned", "No Platinum yet"],
+    datasets: [
+      {
+        label: "Summary",
+        data: [
+          statistics.platinumGames,
+          statistics.totalGames - statistics.platinumGames,
+        ],
+        backgroundColor: [
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: ["rgba(153, 102, 255, 1)", "rgba(255, 159, 64, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const platformData = {
+    labels: Object.keys(statistics.platformCounts),
+    datasets: [
+      {
+        label: "Platform Distribution",
+        data: Object.values(statistics.platformCounts),
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   const handleGameClick = (game) => {
     setSelectedGame(game);
@@ -66,7 +162,7 @@ const GameTracker = ({ items, onResetGames }) => {
   };
 
   return (
-    <div className="flex py-20 items-start justify-center w-screen h-screen bg-matte-black">
+    <div className="grid grid-rows-[auto_auto] gap-8 py-20 items-center justify-center w-screen h-screen bg-matte-black">
       <button
         onClick={handleReset}
         className="mb-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 "
@@ -118,6 +214,37 @@ const GameTracker = ({ items, onResetGames }) => {
           <HiArrowCircleRight size="50" />
         </button>
       </div>
+
+    {/* Statistics Section */}
+    <div className="mt-8 grid grid-cols-4 gap-4">
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <h3 className="text-white text-center mb-2">Total Games</h3>
+        <div className="w-48 h-48 mx-auto">
+          <Pie data={totalGamesData} />
+        </div>
+      </div>
+      
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <h3 className="text-white text-center mb-2">Completion Status</h3>
+        <div className="w-48 h-48 mx-auto">
+          <Pie data={completionData} />
+        </div>
+      </div>
+      
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <h3 className="text-white text-center mb-2">Platinum Status</h3>
+        <div className="w-48 h-48 mx-auto">
+          <Pie data={platinumData} />
+        </div>
+      </div>
+      
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <h3 className="text-white text-center mb-2">Platform Distribution</h3>
+        <div className="w-48 h-48 mx-auto">
+          <Pie data={platformData} />
+        </div>
+      </div>
+    </div>
 
       <AnimatePresence>
         {selectedGame && (
