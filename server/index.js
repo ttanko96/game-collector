@@ -31,7 +31,7 @@ let tokenExpiration = null;
 async function getAuthHeaders() {
   if (!cachedToken || Date.now() >= tokenExpiration) {
     cachedToken = await getTwitchToken();
-    tokenExpiration = Date.now() + 5587808 * 1000; // 64 nap
+    tokenExpiration = Date.now() + 5587808 * 1000; // 64 days
   }
   return {
     'Client-ID': process.env.IGDB_CLIENT_ID,
@@ -53,7 +53,7 @@ app.get('/api/games', async (req, res) => {
 
     if (!search || search.length < 1) {
       console.log('Invalid search term');
-      return res.status(400).json({ error: 'Legalább 1 karakter szükséges' });
+      return res.status(400).json({ error: 'At least one letter required!' });
     }
 
     console.log('Getting auth headers...');

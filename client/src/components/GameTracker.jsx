@@ -8,7 +8,7 @@ import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GameTracker = ({ items }) => {
+const GameTracker = ({ items, onResetGames }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [sortAlphabetically, setSortAlphabetically] = useState(false);
   const carouselRef = useRef(null);
@@ -65,7 +65,7 @@ const GameTracker = ({ items }) => {
   };
 
   const platinumData = {
-    labels: ["Platinum trophy earned", "No Platinum yet"],
+    labels: ["Platinum Trophy earned", "No Platinum yet"],
     datasets: [
       {
         label: "Summary",
@@ -213,14 +213,14 @@ const GameTracker = ({ items }) => {
         </div>
 
         <div className="bg-gray-800 p-4 rounded-lg">
-          <h3 className="text-white text-center mb-2">Completion Status</h3>
+          <h3 className="text-white text-center mb-2">Completed Games</h3>
           <div className="w-48 h-48 mx-auto">
             <Pie data={completionData} />
           </div>
         </div>
 
         <div className="bg-gray-800 p-4 rounded-lg">
-          <h3 className="text-white text-center mb-2">Platinum Status</h3>
+          <h3 className="text-white text-center mb-2">Platinum Count</h3>
           <div className="w-48 h-48 mx-auto">
             <Pie data={platinumData} />
           </div>
@@ -258,7 +258,7 @@ const GameTracker = ({ items }) => {
                 />
                 <button
                   onClick={() => {
-                    if (window.confirm("Are you sure you want to delete this game?")) {
+                    if (window.confirm("Are you sure you want to remove this game from you page?")) {
                       const updatedItems = items.filter(g => g.id !== selectedGame.id);
                       onResetGames(updatedItems);
                       setSelectedGame(null);
@@ -338,7 +338,7 @@ const GameTracker = ({ items }) => {
                       className="w-4 h-4"
                     />
 
-                    <span className="text-gray-100">100%-os teljesítés</span>
+                    <span className="text-gray-100">Completed</span>
                   </label>
 
                   <label className="flex items-center gap-2 mb-4">
@@ -359,14 +359,14 @@ const GameTracker = ({ items }) => {
                       className="w-4 h-4"
                     />
 
-                    <span className="text-gray-300">Platina</span>
+                    <span className="text-gray-300">Platinum Trophy</span>
                   </label>
                 </div>
                 <button
                   onClick={() => setSelectedGame(null)}
                   className="w-full bg-gray-600 text-white py-2 rounded-lg hover:bg-crimson transition-colors"
                 >
-                  Bezárás
+                  Close
                 </button>
               </div>
             </motion.div>

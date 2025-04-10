@@ -13,7 +13,7 @@ const GameSearch = ({ onAddGame }) => {
       const savedGames = localStorage.getItem("myGames");
       return savedGames ? JSON.parse(savedGames) : [];
     } catch (error) {
-      console.error("Hiba a localStorage betöltésekor:", error);
+      console.error("An error occurred during the loading of LocaleStorage:", error);
       return [];
     }
   });
@@ -24,7 +24,7 @@ const GameSearch = ({ onAddGame }) => {
 
   const handleSearch = async () => {
     if (searchTerm.length < 1) {
-      setError("Legalább 1 karakter szükséges");
+      setError("At least one letter required!");
       return;
     }
 
@@ -36,9 +36,9 @@ const GameSearch = ({ onAddGame }) => {
         `/api/games?search=${encodeURIComponent(searchTerm)}`
       );
 
-      console.log("Válasz státusz:", response.status);
+      console.log("Response status:", response.status);
       if (!response.ok) {
-        throw new Error("Hiba a keresés során");
+        throw new Error("An error occurred during the search progress.");
       }
 
       const data = await response.json();
@@ -55,7 +55,7 @@ const GameSearch = ({ onAddGame }) => {
 
       setGames(processedGames);
     } catch (err) {
-      console.error("Hiba a keresés során:", err);
+      console.error("An error occurred during the search progress:", err);
       setError(err.message);
       setGames([]);
     } finally {
@@ -84,7 +84,7 @@ const GameSearch = ({ onAddGame }) => {
     <div className="bg-matte-black min-h-screen flex flex-col font-mono">
       <div className="search-bar container mx-auto p-4 flex-shrink-0">
         <h1 className="text-3xl font-bold text-crimson mb-6 text-center">
-          Játékkönyvtár
+          Game Library
         </h1>
         <div className="flex justify-center">
           <form
@@ -99,7 +99,7 @@ const GameSearch = ({ onAddGame }) => {
               value={searchTerm}
               className="search-bar-input"
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Játékok keresése..."
+              placeholder="Search Games..."
             />
             <button
               type="submit"
@@ -188,10 +188,10 @@ const GameSearch = ({ onAddGame }) => {
             }`}
           >
             {loading
-              ? "Keresés folyamatban..."
+              ? "Search in progress..."
               : searchTerm
-              ? "A keresett játék nem található!"
-              : "Írj be egy játékot."}
+              ? "Game not found!"
+              : "Search for a game you would like to check!"}
           </p>
         )}
       </div>

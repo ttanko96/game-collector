@@ -6,17 +6,17 @@ const SideBar = ({ onNavigate }) => {
         ">
             <SideBarIcon
                 icon={<GiBookshelf size="58" />}
-                text={"Játékkönyvtár"}
+                text={"Game Library"}
                 onClick={() => onNavigate('search')}
             />
             <SideBarIcon 
                 icon={<GiBandit size="58" />} 
-                text={"Saját lista"}
+                text={"Personal List"}
                 onClick={() => onNavigate('tracker')}
             />
             <SideBarIcon 
                 icon={<GiStarMedal size="58" />} 
-                text={"Toplista"}
+                text={"Coming soon.."}
             />
          </div>
     )
