@@ -16,16 +16,11 @@ function App() {
       case 'search':
         return <GameSearch onAddGame={addGame}/>;
       case 'tracker':
-        return <GameTracker items={myGames} onResetGames={handleResetGames}/>;
+        return <GameTracker items={myGames}/>;
       default:
         return <GameSearch onAddGame={addGame}/>;
     }
   }
-
-  const handleResetGames = (newList) => {
-    setMyGames(newList);
-    localStorage.setItem('myGames', JSON.stringify(newList));
-  };
 
   useEffect(() => {
     localStorage.setItem('myGames', JSON.stringify(myGames));

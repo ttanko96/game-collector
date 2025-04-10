@@ -1,13 +1,14 @@
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { FaTrash } from "react-icons/fa";
 import { AnimatePresence } from "framer-motion";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GameTracker = ({ items, onResetGames }) => {
+const GameTracker = ({ items }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [sortAlphabetically, setSortAlphabetically] = useState(false);
   const carouselRef = useRef(null);
@@ -111,12 +112,6 @@ const GameTracker = ({ items, onResetGames }) => {
     setSelectedGame(game);
   };
 
-  const handleReset = () => {
-    if (window.confirm("Are you sue?")) {
-      onResetGames([]);
-    }
-  };
-
   const displayedItems = sortAlphabetically
     ? [...items].sort((a, b) => a.name.localeCompare(b.name))
     : items;
@@ -163,12 +158,6 @@ const GameTracker = ({ items, onResetGames }) => {
 
   return (
     <div className="grid grid-rows-[auto_auto] gap-8 py-20 items-center justify-center w-screen h-screen bg-matte-black">
-      <button
-        onClick={handleReset}
-        className="mb-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 "
-      >
-        Reset Game List
-      </button>
       <label className="relative inline-flex items-center cursor-pointer">
         <input
           type="checkbox"
@@ -215,36 +204,35 @@ const GameTracker = ({ items, onResetGames }) => {
         </button>
       </div>
 
-    {/* Statistics Section */}
-    <div className="mt-8 grid grid-cols-4 gap-4">
-      <div className="bg-gray-800 p-4 rounded-lg">
-        <h3 className="text-white text-center mb-2">Total Games</h3>
-        <div className="w-48 h-48 mx-auto">
-          <Pie data={totalGamesData} />
+      <div className="mt-8 grid grid-cols-4 gap-4">
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-white text-center mb-2">Total Games</h3>
+          <div className="w-48 h-48 mx-auto">
+            <Pie data={totalGamesData} />
+          </div>
+        </div>
+
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-white text-center mb-2">Completion Status</h3>
+          <div className="w-48 h-48 mx-auto">
+            <Pie data={completionData} />
+          </div>
+        </div>
+
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-white text-center mb-2">Platinum Status</h3>
+          <div className="w-48 h-48 mx-auto">
+            <Pie data={platinumData} />
+          </div>
+        </div>
+
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-white text-center mb-2">Platform Distribution</h3>
+          <div className="w-48 h-48 mx-auto">
+            <Pie data={platformData} />
+          </div>
         </div>
       </div>
-      
-      <div className="bg-gray-800 p-4 rounded-lg">
-        <h3 className="text-white text-center mb-2">Completion Status</h3>
-        <div className="w-48 h-48 mx-auto">
-          <Pie data={completionData} />
-        </div>
-      </div>
-      
-      <div className="bg-gray-800 p-4 rounded-lg">
-        <h3 className="text-white text-center mb-2">Platinum Status</h3>
-        <div className="w-48 h-48 mx-auto">
-          <Pie data={platinumData} />
-        </div>
-      </div>
-      
-      <div className="bg-gray-800 p-4 rounded-lg">
-        <h3 className="text-white text-center mb-2">Platform Distribution</h3>
-        <div className="w-48 h-48 mx-auto">
-          <Pie data={platformData} />
-        </div>
-      </div>
-    </div>
 
       <AnimatePresence>
         {selectedGame && (
@@ -268,6 +256,18 @@ const GameTracker = ({ items, onResetGames }) => {
                   src={selectedGame.image}
                   className=" w-full h-64 object-contain absolute top-0 left-0 "
                 />
+                <button
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to delete this game?")) {
+                      const updatedItems = items.filter(g => g.id !== selectedGame.id);
+                      onResetGames(updatedItems);
+                      setSelectedGame(null);
+                    }
+                  }}
+                  className="absolute bottom-2 right-2 text-crimson hover:text-orange-600 transition-colors"
+                >
+                  <FaTrash size='25' />
+                </button>
               </div>
               <div className="p-4">
                 <h2 className="flex justify-center text-white font-mono text-2xl font-bold mb-2">
