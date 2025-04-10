@@ -20,7 +20,7 @@ const GameSearch = ({ onAddGame }) => {
 
   useEffect(() => {
     onAddGame(myGames);
-  }, [myGames]);
+  }, [myGames, onAddGame]);
 
   const handleSearch = async () => {
     if (searchTerm.length < 1) {

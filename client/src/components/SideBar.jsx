@@ -11,7 +11,7 @@ const SideBar = ({ onNavigate }) => {
             />
             <SideBarIcon 
                 icon={<GiBandit size="58" />} 
-                text={"Personal List"}
+                text={"Personal Game Shelf"}
                 onClick={() => onNavigate('tracker')}
             />
             <SideBarIcon 
