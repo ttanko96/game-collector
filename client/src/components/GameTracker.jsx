@@ -44,7 +44,7 @@ const GameTracker = ({ items, onResetGames }) => {
     labels: ["Completed", "In Progress"],
     datasets: [
       {
-        label: "Summary",
+        label: '',
         data: [statistics.completedGames, statistics.inProgressGames],
         backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
@@ -57,7 +57,7 @@ const GameTracker = ({ items, onResetGames }) => {
     labels: ["Platinum Trophy earned", "No Platinum yet"],
     datasets: [
       {
-        label: "Summary",
+        label: '',
         data: [
           statistics.platinumGames,
           statistics.totalGames - statistics.platinumGames,
@@ -76,7 +76,7 @@ const GameTracker = ({ items, onResetGames }) => {
     labels: Object.keys(statistics.platformCounts),
     datasets: [
       {
-        label: "Platform Distribution",
+        label: '',
         data: Object.values(statistics.platformCounts),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
