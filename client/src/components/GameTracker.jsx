@@ -19,6 +19,7 @@ const GameTracker = ({ items, onResetGames }) => {
   const getStatistics = () => {
     const totalGames = items.length;
     const completedGames = items.filter((game) => game.completed).length;
+    const inProgressGames = items.filter((game) => !game.completed).length;
     const platinumGames = items.filter((game) => game.platinum).length;
     const platformCounts = {};
     items.forEach((game) => {
@@ -32,6 +33,7 @@ const GameTracker = ({ items, onResetGames }) => {
     return {
       totalGames,
       completedGames,
+      inProgressGames,
       platinumGames,
       platformCounts,
     };
@@ -56,7 +58,7 @@ const GameTracker = ({ items, onResetGames }) => {
     datasets: [
       {
         label: "Summary",
-        data: [statistics.completedGames],
+        data: [statistics.completedGames, statistics.inProgressGames],
         backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
         borderWidth: 1,
@@ -204,11 +206,14 @@ const GameTracker = ({ items, onResetGames }) => {
         </button>
       </div>
 
-      <div className="mt-8 grid grid-cols-4 gap-4">
+      <div className="mt-8 grid grid-cols-4 gap-4 font-mono">
         <div className="bg-gray-800 p-4 rounded-lg">
           <h3 className="text-white text-center mb-2">Total Games</h3>
-          <div className="w-48 h-48 mx-auto">
-            <Pie data={totalGamesData} />
+          <div className="flex flex-col items-center justify-center h-48">
+            <span className="text-6xl font-bold text-crimson animate-bounce">
+              {statistics.totalGames}
+            </span>{" "}
+            <span className="text-gray-400 mt-2 font-mono">🎮 Games Tracked</span>
           </div>
         </div>
 
@@ -258,15 +263,21 @@ const GameTracker = ({ items, onResetGames }) => {
                 />
                 <button
                   onClick={() => {
-                    if (window.confirm("Are you sure you want to remove this game from you page?")) {
-                      const updatedItems = items.filter(g => g.id !== selectedGame.id);
+                    if (
+                      window.confirm(
+                        "Are you sure you want to remove this game from you page?"
+                      )
+                    ) {
+                      const updatedItems = items.filter(
+                        (g) => g.id !== selectedGame.id
+                      );
                       onResetGames(updatedItems);
                       setSelectedGame(null);
                     }
                   }}
                   className="absolute bottom-2 right-2 text-crimson hover:text-orange-600 transition-colors"
                 >
-                  <FaTrash size='25' />
+                  <FaTrash size="25" />
                 </button>
               </div>
               <div className="p-4">
