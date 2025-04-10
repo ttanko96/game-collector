@@ -1,8 +1,7 @@
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { FaTrash } from "react-icons/fa";
-import { AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
@@ -40,18 +39,6 @@ const GameTracker = ({ items, onResetGames }) => {
   };
 
   const statistics = getStatistics();
-
-  const totalGamesData = {
-    labels: ["Total Games"],
-    datasets: [
-      {
-        label: "Games",
-        data: [statistics.totalGames],
-        backgroundColor: ["rgba(255, 99, 132, 1)"],
-        borderWidth: 1,
-      },
-    ],
-  };
 
   const completionData = {
     labels: ["Completed", "In Progress"],
@@ -144,7 +131,7 @@ const GameTracker = ({ items, onResetGames }) => {
 
     updatePosition();
     updateButtons();
-  }, [startIndex]);
+  }, [startIndex, items.length]);
 
   const shiftRight = () => {
     if (startIndex < items.length - 4) {
@@ -183,7 +170,7 @@ const GameTracker = ({ items, onResetGames }) => {
             {displayedItems.map((game) => (
               <div
                 key={game.id}
-                className="carousel-item cursor-pointer"
+                className="carousel-item border-2 border-gray-500 cursor-pointer"
                 onClick={() => handleGameClick(game)}
               >
                 {" "}
@@ -207,7 +194,7 @@ const GameTracker = ({ items, onResetGames }) => {
       </div>
 
       <div className="mt-8 grid grid-cols-4 gap-4 font-mono">
-        <div className="bg-gray-800 p-4 rounded-lg">
+        <div className="bg-custom-dark-purple p-4 rounded-lg">
           <h3 className="text-white text-center mb-2">Total Games</h3>
           <div className="flex flex-col items-center justify-center h-48">
             <span className="text-6xl font-bold text-crimson animate-bounce">
@@ -217,21 +204,21 @@ const GameTracker = ({ items, onResetGames }) => {
           </div>
         </div>
 
-        <div className="bg-gray-800 p-4 rounded-lg">
+        <div className="bg-custom-dark-purple p-4 rounded-lg">
           <h3 className="text-white text-center mb-2">Completed Games</h3>
           <div className="w-48 h-48 mx-auto">
             <Pie data={completionData} />
           </div>
         </div>
 
-        <div className="bg-gray-800 p-4 rounded-lg">
+        <div className="bg-custom-dark-purple p-4 rounded-lg">
           <h3 className="text-white text-center mb-2">Platinum Count</h3>
           <div className="w-48 h-48 mx-auto">
             <Pie data={platinumData} />
           </div>
         </div>
 
-        <div className="bg-gray-800 p-4 rounded-lg">
+        <div className="bg-custom-dark-purple p-4 rounded-lg">
           <h3 className="text-white text-center mb-2">Platform Distribution</h3>
           <div className="w-48 h-48 mx-auto">
             <Pie data={platformData} />

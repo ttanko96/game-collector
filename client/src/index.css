@@ -42,7 +42,7 @@
     right: 0; 
     width: .15em; 
     height: 2em; 
-    background-color: orange; 
+    background-color: crimson; 
     animation: blink-caret .75s step-end infinite 1.5s; 
 }
 
@@ -53,7 +53,7 @@
 
 @keyframes blink-caret {
     from, to { background-color: transparent }
-    50% { background-color: orange; }
+    50% { background-color: crimson; }
 }
   
 @layer components {
