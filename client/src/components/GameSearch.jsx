@@ -83,7 +83,7 @@ const GameSearch = ({ onAddGame }) => {
   return (
     <div className="bg-matte-black min-h-screen flex flex-col font-mono">
       <div className="search-bar container mx-auto p-4 flex-shrink-0">
-        <h1 className="text-3xl font-bold text-red-500 mb-6 text-center">
+        <h1 className="text-3xl font-bold text-crimson mb-6 text-center">
           Játékkönyvtár
         </h1>
         <div className="flex justify-center">
@@ -104,10 +104,10 @@ const GameSearch = ({ onAddGame }) => {
             <button
               type="submit"
               disabled={loading}
-              className="px-2 py-2 text-red-700 hover:text-orange-600 transition-colors disabled:text-red-700 disabled:cursor-not-allowed"
+              className="px-2 py-2 text-crimson hover:text-orange-600 transition-colors disabled:text-red-700 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <SearchIcon icon={<FaHourglassHalf size="30" />} />
+                <SearchIcon icon={<FaHourglassHalf size="30" className="animate-spin"/>} />
               ) : (
                 <SearchIcon icon={<HiSearchCircle size="30" />} />
               )}
@@ -115,7 +115,7 @@ const GameSearch = ({ onAddGame }) => {
           </form>
         </div>
         {error && (
-          <p className="text-red-500 mb-6 flex justify-center">{error}</p>
+          <p className="text-crimson mb-6 flex justify-center">{error}</p>
         )}
       </div>
 

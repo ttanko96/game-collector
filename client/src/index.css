@@ -58,7 +58,7 @@
   
 @layer components {
         .sidebar-icon {
-            @apply relative flex items-center justify-center h-20 w-20 mt-2 mb-2 mx-auto shadow-lg bg-gray-800 text-red-700 hover:bg-gray-600 hover:text-orange-600 rounded-md hover:rounded-bl-3xl transition-all duration-300 ease-linear cursor-pointer;
+            @apply relative flex items-center justify-center h-20 w-20 mt-2 mb-2 mx-auto shadow-lg bg-gray-800 text-crimson hover:bg-gray-600 hover:text-orange-600 rounded-md hover:rounded-bl-3xl transition-all duration-300 ease-linear cursor-pointer;
         }
 
         .sidebar-tooltip {
