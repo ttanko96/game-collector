@@ -25,7 +25,8 @@ ChartJS.register(
 
 const GameTracker = ({ items, onResetGames }) => {
   const [startIndex, setStartIndex] = useState(0);
-  const [sortAlphabetically, setSortAlphabetically] = useState(false);
+  const [sortType, setSortType] = useState("default");
+  const [selectedPlatformFilter, setSelectedPlatformFilter] = useState("all");
   const carouselRef = useRef(null);
   const prevBtnRef = useRef(null);
   const nextBtnRef = useRef(null);
@@ -92,7 +93,7 @@ const GameTracker = ({ items, onResetGames }) => {
     labels: Object.keys(statistics.platformCounts),
     datasets: [
       {
-        label: '',
+        label: "",
         data: Object.values(statistics.platformCounts),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -117,9 +118,33 @@ const GameTracker = ({ items, onResetGames }) => {
     setSelectedGame(game);
   };
 
-  const displayedItems = sortAlphabetically
-    ? [...items].sort((a, b) => a.name.localeCompare(b.name))
-    : items;
+  const getUniquePlatforms = () => {
+    const platforms = new Set();
+    items.forEach((game) => {
+      if (game.selectedPlatforms) {
+        game.selectedPlatforms.forEach((platform) => platforms.add(platform));
+      }
+    });
+    return ["all", ...Array.from(platforms).sort()];
+  };
+
+  const displayedItems = items
+    .filter(
+      (game) =>
+        selectedPlatformFilter === "all" ||
+        (game.selectedPlatforms &&
+          game.selectedPlatforms.includes(selectedPlatformFilter))
+    )
+    .sort((a, b) => {
+      switch (sortType) {
+        case "alphabetical":
+          return a.name.localeCompare(b.name);
+        case "reverse-alphabetical":
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
 
   useEffect(() => {
     const updatePosition = () => {
@@ -163,15 +188,34 @@ const GameTracker = ({ items, onResetGames }) => {
 
   return (
     <div className="grid grid-rows-[auto_auto] gap-8 py-20 items-center justify-center w-screen h-screen bg-matte-black">
-      <label className="relative inline-flex items-center cursor-pointer">
-        <input
-          type="checkbox"
-          checked={sortAlphabetically}
-          onChange={() => setSortAlphabetically(!sortAlphabetically)}
-          className="sr-only peer"
-        />
-        <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
-      </label>
+      <div className="flex justify-evenly">
+        <div className="flex items-center gap-2">
+          <label className="text-gray-100 font-mono">Sort by:</label>
+          <select
+            value={sortType}
+            onChange={(e) => setSortType(e.target.value)}
+            className="bg-custom-dark-purple text-gray-100 p-2 rounded font-mono"
+          >
+            <option value="default">Default</option>
+            <option value="alphabetical">A-Z</option>
+            <option value="reverse-alphabetical">Z-A</option>
+          </select>
+        </div>
+        <div className="flex items-center gap-2">
+          <label className="text-gray-100 font-mono">Filter by platform:</label>
+          <select
+            value={selectedPlatformFilter}
+            onChange={(e) => setSelectedPlatformFilter(e.target.value)}
+            className="bg-custom-dark-purple text-gray-100 p-2 rounded"
+          >
+            {getUniquePlatforms().map((platform) => (
+              <option key={platform} value={platform}>
+                {platform}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div className="flex items-center">
         <button
           ref={prevBtnRef}
@@ -257,8 +301,8 @@ const GameTracker = ({ items, onResetGames }) => {
                     },
                     ticks: {
                       precision: 0,
-                      stepSize: 1
-                    }
+                      stepSize: 1,
+                    },
                   },
                   x: {
                     grid: {
@@ -313,7 +357,7 @@ const GameTracker = ({ items, onResetGames }) => {
                   <FaTrash size="25" />
                 </button>
               </div>
-              <div className="p-4">
+              <div className="p-4 overflow-y-auto max-h-[70vh] games-list">
                 <h2 className="flex justify-center text-white font-mono text-2xl font-bold mb-2">
                   {selectedGame.name}
                 </h2>
