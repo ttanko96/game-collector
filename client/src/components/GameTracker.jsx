@@ -1,11 +1,27 @@
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import { FaTrash } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 const GameTracker = ({ items, onResetGames }) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -44,7 +60,7 @@ const GameTracker = ({ items, onResetGames }) => {
     labels: ["Completed", "In Progress"],
     datasets: [
       {
-        label: '',
+        label: "",
         data: [statistics.completedGames, statistics.inProgressGames],
         backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
@@ -57,7 +73,7 @@ const GameTracker = ({ items, onResetGames }) => {
     labels: ["Platinum Trophy earned", "No Platinum yet"],
     datasets: [
       {
-        label: '',
+        label: "",
         data: [
           statistics.platinumGames,
           statistics.totalGames - statistics.platinumGames,
@@ -223,7 +239,35 @@ const GameTracker = ({ items, onResetGames }) => {
         <div className="bg-custom-dark-purple p-4 rounded-lg">
           <h3 className="text-white text-center mb-2">Platform Distribution</h3>
           <div className="w-48 h-48 mx-auto">
-            <Pie data={platformData} />
+            <Bar
+              data={platformData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: false,
+                    grid: {
+                      display: false,
+                    },
+                    ticks: {
+                      precision: 0,
+                      stepSize: 1
+                    }
+                  },
+                  x: {
+                    grid: {
+                      display: false,
+                    },
+                  },
+                },
+              }}
+            />
           </div>
         </div>
       </div>
