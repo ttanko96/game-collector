@@ -78,8 +78,6 @@ const GameSearch = ({ onAddGame }) => {
     onAddGame(updatedGames);
   };
 
-  const SearchIcon = ({ icon }) => <div>{icon}</div>;
-
   return (
     <div className="bg-matte-black min-h-screen flex flex-col font-mono">
       <div className="search-bar container mx-auto p-4 flex-shrink-0">
@@ -107,9 +105,9 @@ const GameSearch = ({ onAddGame }) => {
               className="px-2 py-2 text-crimson hover:text-orange-600 transition-colors disabled:text-red-700 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <SearchIcon icon={<FaHourglassHalf size="30" className="animate-spin"/>} />
+                <FaHourglassHalf size="30" className="animate-spin"/>
               ) : (
-                <SearchIcon icon={<HiSearchCircle size="30" />} />
+                <HiSearchCircle size="30" />
               )}
             </button>
           </form>

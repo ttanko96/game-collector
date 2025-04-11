@@ -165,14 +165,14 @@ const GameTracker = ({ items, onResetGames }) => {
       prevBtnRef.current.style.visibility =
         startIndex === 0 ? "hidden" : "visible";
       nextBtnRef.current.style.opacity =
-        startIndex >= items.length - 4 ? "0" : "1";
+        startIndex >= displayedItems.length - 4 ? "0" : "1";
       nextBtnRef.current.style.visibility =
-        startIndex >= items.length - 4 ? "hidden" : "visible";
+        startIndex >= displayedItems.length - 4 ? "hidden" : "visible";
     };
 
     updatePosition();
     updateButtons();
-  }, [startIndex, items.length]);
+  }, [startIndex, displayedItems.length]);
 
   const shiftRight = () => {
     if (startIndex < items.length - 4) {
