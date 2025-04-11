@@ -1,5 +1,5 @@
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaTrophy, FaStar } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
@@ -230,15 +230,42 @@ const GameTracker = ({ items, onResetGames }) => {
             {displayedItems.map((game) => (
               <div
                 key={game.id}
-                className="carousel-item border-2 border-gray-500 cursor-pointer"
+                className="carousel-item border-2 border-gray-500 cursor-pointer relative"
                 onClick={() => handleGameClick(game)}
               >
                 {" "}
-                <img
-                  className="carousel-item"
-                  src={game.image}
-                  alt={game.name}
-                />
+                <div className="relative w-full h-full">
+                  <img
+                    className={`carousel-item w-full h-full object-cover ${
+                      !game.selectedPlatforms ||
+                      game.selectedPlatforms.length === 0
+                        ? "grayscale brightness-75"
+                        : ""
+                    }`}
+                    src={game.image}
+                    alt={game.name}
+                  />
+                  {(!game.selectedPlatforms ||
+                    game.selectedPlatforms.length === 0) && (
+                    <div className="absolute bottom-2 left-2 bg-red-600 text-white px-2 py-1 text-[0.6rem]	 rounded">
+                      No Platform selected
+                    </div>
+                  )}
+                </div>
+                <div className="absolute inset-0 p-2 flex justify-between items-start">
+                  {game.completed && (
+                    <FaStar
+                      size="24"
+                      className="text-yellow-500 border-2 border-custom-onyx-black bg-black/80 rounded-full"
+                    />
+                  )}
+                  {game.platinum && (
+                    <FaTrophy
+                      size="24"
+                      className="text-platinum rounded-full border-2 border-custom-onyx-black bg-black/80"
+                    />
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -295,7 +322,7 @@ const GameTracker = ({ items, onResetGames }) => {
                 },
                 scales: {
                   y: {
-                    beginAtZero: false,
+                    beginAtZero: true,
                     grid: {
                       display: false,
                     },
@@ -426,7 +453,11 @@ const GameTracker = ({ items, onResetGames }) => {
                       className="w-4 h-4"
                     />
 
-                    <span className="text-gray-100">Completed</span>
+                    <span className="text-gray-100"> Completed</span>
+                    <FaStar
+                      size="24"
+                      className="text-yellow-500 border-2 border-custom-onyx-black bg-black/80 rounded-full"
+                    />
                   </label>
 
                   <label className="flex items-center gap-2 mb-4">
@@ -448,6 +479,10 @@ const GameTracker = ({ items, onResetGames }) => {
                     />
 
                     <span className="text-gray-300">Platinum Trophy</span>
+                    <FaTrophy
+                      size="24"
+                      className="text-platinum rounded-full border-2 border-custom-onyx-black bg-black/80"
+                    />
                   </label>
                 </div>
                 <button

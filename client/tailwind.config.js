@@ -11,6 +11,7 @@ export default {
         'custom-dark-purple' : '#301934',
         'licorice' : '#1B1212',
         'matte-black' : '#28282B',
+        'platinum' : '#E5E4E2',
         'crimson' : '#DC143C'
       },
     },
