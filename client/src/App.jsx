@@ -1,4 +1,3 @@
-import './App.css'
 import { useState, useEffect  } from 'react';
 import GameTracker from './components/GameTracker';
 import GameSearch from './components/GameSearch';
