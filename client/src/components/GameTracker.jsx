@@ -25,7 +25,7 @@ ChartJS.register(
 
 const GameTracker = ({ items, onResetGames }) => {
   const [startIndex, setStartIndex] = useState(0);
-  const [sortType, setSortType] = useState("default");
+  const [sortType, setSortType] = useState("alphabetical");
   const [selectedPlatformFilter, setSelectedPlatformFilter] = useState("all");
   const carouselRef = useRef(null);
   const prevBtnRef = useRef(null);
@@ -196,7 +196,7 @@ const GameTracker = ({ items, onResetGames }) => {
             onChange={(e) => setSortType(e.target.value)}
             className="bg-custom-dark-purple text-gray-100 p-2 rounded font-mono"
           >
-            <option value="default">Default</option>
+            <option value="default">Date of Tracking</option>
             <option value="alphabetical">A-Z</option>
             <option value="reverse-alphabetical">Z-A</option>
           </select>
