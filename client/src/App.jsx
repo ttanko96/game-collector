@@ -2,6 +2,7 @@ import { useState, useEffect  } from 'react';
 import GameTracker from './components/GameTracker';
 import GameSearch from './components/GameSearch';
 import SideBar from './components/SideBar';
+import TierListApp from './components/TierList';
 
 function App() {
   const [myGames, setMyGames] = useState(() => {
@@ -16,6 +17,8 @@ function App() {
         return <GameSearch onAddGame={addGame}/>;
       case 'tracker':
         return <GameTracker items={myGames} onResetGames={handleResetGames}/>;
+      case 'tier':
+        return <TierListApp items={myGames} />
       default:
         return <GameSearch onAddGame={addGame}/>;
     }

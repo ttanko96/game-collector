@@ -1,5 +1,4 @@
-import { GiBandit, GiBookshelf  } from "react-icons/gi";
-import { HiQuestionMarkCircle } from "react-icons/hi";
+import { GiBandit, GiBookshelf, GiCrown  } from "react-icons/gi";
 
 const SideBar = ({ onNavigate }) => {    
     return (
@@ -12,12 +11,13 @@ const SideBar = ({ onNavigate }) => {
             />
             <SideBarIcon 
                 icon={<GiBandit size="58" />} 
-                text={"Player Shelf"}
+                text={"Dashboard"}
                 onClick={() => onNavigate('tracker')}
             />
             <SideBarIcon 
-                icon={<HiQuestionMarkCircle  size="58" />} 
-                text={"Coming soon.."}
+                icon={<GiCrown  size="58" />} 
+                text={"Tier List"}
+                onClick={() => onNavigate('tier')}
             />
          </div>
     )

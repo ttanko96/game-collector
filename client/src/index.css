@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (max-width: 430px) {
+@media (max-width: 768px) {
     .mobile-view{
         @apply flex flex-row h-20 w-screen items-center justify-evenly;
     }
@@ -11,8 +11,11 @@
     }
     .sidebar-tooltip-mobile {
         @apply absolute w-auto min-w-max top-16 left-[-8px] rounded-md shadow-md text-white bg-gray-900 text-xs font-bold transition-all duration-100 scale-0 origin-left;
-
     }
+    .mobile-search-container {
+        @apply flex mt-16 ;
+    }
+    
 }
   
 @layer components {
@@ -98,8 +101,8 @@
 }
 
 @keyframes typing {
-    from { width: 0 }
-    to { width: 32%; }
+    from { max-width: 0 }
+    to { max-width: 54ch;}
 }
 
 @keyframes blink-caret {

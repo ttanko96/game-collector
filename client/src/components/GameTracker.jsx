@@ -188,6 +188,7 @@ const GameTracker = ({ items, onResetGames }) => {
 
   return (
     <div className="grid grid-rows-[auto_auto] gap-8 py-20 items-center justify-center w-screen h-screen bg-matte-black">
+      <div className="flex font-mono justify-center text-crimson text-3xl font-bold">Personal Dashboard</div>
       <div className="flex justify-evenly">
         <div className="flex items-center gap-2">
           <label className="text-gray-100 font-mono">Sort by:</label>

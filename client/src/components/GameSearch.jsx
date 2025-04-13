@@ -79,7 +79,7 @@ const GameSearch = ({ onAddGame }) => {
   };
 
   return (
-    <div className="bg-matte-black min-h-screen flex flex-col font-mono">
+    <div className="bg-matte-black min-h-screen flex flex-col font-mono mobile-search-container">
       <div className="search-bar container mx-auto p-4 flex-shrink-0">
         <h1 className="text-3xl font-bold text-crimson mb-6 text-center">
           Game Library
